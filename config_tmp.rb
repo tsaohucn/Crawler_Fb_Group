@@ -8,7 +8,9 @@ require './config/fb_config'
 #MONGODB_DBNAME = 'fb_beta'
 #MONGODB_USER_NAME = 'username'
 #MONGODB_USER_PWD = 'password'
-
+TABLE_TEST = 'test'
+TABLE_GROUPS = 'groups'
+TABLE_FEEDS = 'feeds'
 TABLE_PAGES = 'pages' # primary key: page_id
 TABLE_POSTS = 'posts' # primary key: post_id
 TABLE_COMMENTS = 'comments' # primary key: post_id

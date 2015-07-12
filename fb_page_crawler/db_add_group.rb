@@ -46,8 +46,8 @@ class FbPageCrawler
       #db_update_post_likes(post['id'])
     }
 
-  rescue => ex
-    @@logger.error ex.message
-    @@logger.debug ex.backtrace.join("\n")
+  #rescue => ex
+  #  @@logger.error ex.message
+ #   @@logger.debug ex.backtrace.join("\n")
   end
 end
