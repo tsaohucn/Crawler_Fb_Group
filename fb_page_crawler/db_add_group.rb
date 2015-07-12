@@ -10,16 +10,16 @@ class FbPageCrawler
     raise "Group \"#{group_id}\" has been in the database" unless coll.find('_id' => group_data['id']).first.nil?
     # Retrieve some posts from the target page
     group_feeds = fb_get_feeds(group_id, :until => time_update.to_i, :limit => 3)
-    latest_post_time = group_feeds.empty? ? time_update : Time.parse(group_feeds.first.fetch('created_time'))
-    oldest_post_time = group_feeds.empty? ? time_update : Time.parse(group_feeds.last.fetch('created_time'))
+    latest_feed_time = group_feeds.empty? ? time_update : Time.parse(group_feeds.first.fetch('created_time'))
+    oldest_feed_time = group_feeds.empty? ? time_update : Time.parse(group_feeds.last.fetch('created_time'))
 
     $stderr.puts "db_add_group: adding group \"#{group_name}\" : \"#{group_id}\" into the database"
     group_data = {'_id' => group_data['id'],
-                 'latest_post_time' => latest_post_time,
-                 'oldest_post_time' => oldest_post_time,
+                 'latest_feed_time' => latest_feed_time,
+                 'oldest_feed_time' => oldest_feed_time,
                  'last_updated' => time_update,
-                 'check_new_posts' => true,
-                 'check_old_posts' => true,
+                 'check_new_feeds' => true,
+                 'check_old_feeds' => true,
                  'doc' => group_data}
     #write page data into mongo databse
     coll.insert(group_data)
@@ -33,8 +33,8 @@ class FbPageCrawler
       #post['likes'].delete("paging")
       #post['comments'].delete("paging")
       feed_data = {'_id' => feed['id'],
-                   'page_id' => group_data['_id'],
-                   'post_time' => Time.parse(feed['created_time']),
+                   'group_id' => group_data['_id'],
+                   'feed_time' => Time.parse(feed['created_time']),
                    'last_updated' => time_update,
                    #'last_updated' => Time.at(100), # set a small value so that it will be updated quickly
                    'doc' => feed}
@@ -45,9 +45,8 @@ class FbPageCrawler
       # update likes
       #db_update_post_likes(post['id'])
     }
-
-  #rescue => ex
-  #  @@logger.error ex.message
- #   @@logger.debug ex.backtrace.join("\n")
+  rescue => ex
+    @@logger.error ex.message
+    @@logger.debug ex.backtrace.join("\n")
   end
 end

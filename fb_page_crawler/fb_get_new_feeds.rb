@@ -4,9 +4,9 @@ class FbPageCrawler
   # return a array of post hashes
   # latest_time must be an unix time stamp
   # latest_time should be the latest posts that has been obtained in past
-  def fb_get_new_posts(page_id, latest_time, opts={}, &block)
+  def fb_get_new_feeds(group_id, latest_time, opts={}, &block)
     find_opts = {:since => latest_time}.merge opts
-    fb_get_posts_since(page_id, latest_time, find_opts, &block)
+    fb_get_feeds_since(group_id, latest_time, find_opts, &block)
   end
 end
 
