@@ -36,7 +36,7 @@ def main
   #time_care = Time.now - 60 * 60 * 24 * 30 # only fetch posts within 30 days
   time_care = Time.new(2010, 1, 1) # only fetch posts after a specificed day
   until $leave
-    #total_update_time = 0
+    total_update_time = 0
     total_add_new_feeds_time = 0
     total_add_old_feeds_time = 0
     need_updated_groups = myfb.db_obtain_groups(:limit => 100 ,:update_interval => 60)
@@ -55,8 +55,17 @@ def main
       total_add_old_feeds_time += group_add_old_feeds_time if group_add_old_feeds_time.class == Float
       next if $leave
     } 
-    puts "完成全部社團新文章增加[耗時#{total_add_new_feeds_time}秒]"
-    puts "完成全部社團舊文章增加[耗時#{total_add_old_feeds_time}秒]"
+    need_updated_groups.each{|group|
+      #update_groups
+      group_update_time = myfb.db_update_feeds_faster(group['_id'],group['doc']['name'])
+      total_update_time += group_update_time if group_update_time.class == Float
+      next if $leave
+    }
+    #File.open("./timelog.txt", "a") { |output|  
+      output.puts "完成全部社團新文章增加[耗時#{total_add_new_groups_time}秒]"
+      output.puts "完成全部社團舊文章增加[耗時#{total_add_old_groups_time}秒]"
+      output.puts "完成全部社團文章更新[耗時#{total_update_time}秒]"
+   # }
   end
 
 end
