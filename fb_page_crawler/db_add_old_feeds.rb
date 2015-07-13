@@ -8,7 +8,7 @@ class FbPageCrawler
     raise 'group_id can not be empty' if group_id.nil? || group_id.empty?
     time_update = Time.now
     # Retrieve new posts from the target page
-    group_feeds = fb_get_old_feeds(group_id, oldest_time, {:limit => 300}.merge(opts))
+    group_feeds = fb_get_old_feeds(group_id, oldest_time, {:limit => 200}.merge(opts))
     oldest_feed_time = group_feeds.empty? ? oldest_time : Time.parse(group_feeds.last.fetch('created_time'))
     oldest_feed_time = oldest_time if oldest_time < oldest_feed_time
 

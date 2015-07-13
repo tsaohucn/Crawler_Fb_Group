@@ -14,7 +14,8 @@ def main
   myfb = FbPageCrawler.new
   myfb.app_id = APP_ID
   myfb.app_secret = APP_SECRET
-  myfb.fb_get_token!
+  #myfb.fb_get_token!
+  myfb.fb_get_close_token
   #myfb.access_token = APP_TOKEN # set access_token if you have a valid one
 
   #page_ids = ['mcdonalds.tw','kfctaiwan','mosburger.tw','PizzaHut.TW',
@@ -51,20 +52,21 @@ def main
       group_add_new_feeds_time = myfb.db_add_new_feeds(group['_id'],group['doc']['name'], group['latest_feed_time'])
       total_add_new_feeds_time += group_add_new_feeds_time if group_add_new_feeds_time.class == Float
       next if $leave
+      #add_old_feeds
       group_add_old_feeds_time = myfb.db_add_old_feeds(group['_id'],group['doc']['name'],group['oldest_feed_time']) if group['oldest_feed_time'] > time_care && group['check_old_feeds']
       total_add_old_feeds_time += group_add_old_feeds_time if group_add_old_feeds_time.class == Float
       next if $leave
     } 
-    need_updated_groups.each{|group|
+    #need_updated_groups.each{|group|
       #update_groups
-      group_update_time = myfb.db_update_feeds_faster(group['_id'],group['doc']['name'])
-      total_update_time += group_update_time if group_update_time.class == Float
-      next if $leave
-    }
+      #group_update_time = myfb.db_update_feeds_faster(group['_id'],group['doc']['name'])
+      #total_update_time += group_update_time if group_update_time.class == Float
+     # next if $leave
+    #}
     #File.open("./timelog.txt", "a") { |output|  
-      output.puts "完成全部社團新文章增加[耗時#{total_add_new_groups_time}秒]"
-      output.puts "完成全部社團舊文章增加[耗時#{total_add_old_groups_time}秒]"
-      output.puts "完成全部社團文章更新[耗時#{total_update_time}秒]"
+      puts "完成全部社團新文章增加[耗時#{total_add_new_feeds_time}秒]"
+      puts "完成全部社團舊文章增加[耗時#{total_add_old_feeds_time}秒]"
+      #puts "完成全部社團文章更新[耗時#{total_update_time}秒]"
    # }
   end
 

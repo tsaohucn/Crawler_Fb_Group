@@ -23,8 +23,12 @@ class FbPageCrawler
       get_new_feeds = fb_get_feeds(group_id,{:limit => 200,:since=>since_time ,:until=>until_time})
       if !get_new_feeds.empty?
       new_feeds = new_feeds | get_new_feeds
-      #puts "抓取社團<#{group_name}>新文章<文章時間從#{get_new_feeds.last.fetch('created_time')}到#{get_new_feeds.first.fetch('created_time')}>"
+      puts "抓取社團\"#{group_name}\"新文章...[#{since_time}到#{until_time}][#{get_new_feeds.size}篇]"
+      #puts "抓取社團\"#{group_name}\"新文章...[文章時間從#{get_new_feeds.last.fetch('created_time')}到#{get_new_feeds.first.fetch('created_time')}]"
       until_time = Time.parse(get_new_feeds.last.fetch('created_time'))
+      else
+        puts "抓到空文章"
+        break
       end
     end
     now_3 = Time.now#test programin time

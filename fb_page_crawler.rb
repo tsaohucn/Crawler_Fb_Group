@@ -39,6 +39,7 @@ end
 
 require './fb_page_crawler/fb_graph_get'
 require './fb_page_crawler/fb_get_token'
+require './fb_page_crawler/fb_get_close_token'
 require './fb_page_crawler/fb_get_user'
 require './fb_page_crawler/fb_get_feeds'
 require './fb_page_crawler/fb_get_feeds_since'

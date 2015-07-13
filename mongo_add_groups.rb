@@ -16,7 +16,8 @@ def main
   myfb.app_id = APP_ID
   myfb.app_secret = APP_SECRET
   #myfb.access_token = APP_TOKEN # set access_token if you have a valid one
-  myfb.fb_get_token!
+  #myfb.fb_get_token!
+  myfb.fb_get_close_token
   mongo_db = mongo_link('127.0.0.1',27017,'fb_group','admin','12345')
   coll = mongo_db['group_list']
   group_list = JSON.parse(coll.find_one().to_json)
