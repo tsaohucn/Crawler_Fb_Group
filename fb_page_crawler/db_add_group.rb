@@ -7,6 +7,7 @@ class FbPageCrawler
     raise 'No available data retrieved' unless group_data.has_key?('id')
     # Check if the page is in database
     coll = @mongo_db[TABLE_GROUPS]
+    if coll.find('_id' => group_data['id']).first.nil?
     raise "Group \"#{group_id}\" has been in the database" unless coll.find('_id' => group_data['id']).first.nil?
     # Retrieve some posts from the target page
     group_feeds = fb_get_feeds(group_id, :until => time_update.to_i, :limit => 3)
@@ -45,6 +46,7 @@ class FbPageCrawler
       # update likes
       #db_update_post_likes(post['id'])
     }
+  end
   rescue => ex
     @@logger.error ex.message
     @@logger.debug ex.backtrace.join("\n")

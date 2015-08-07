@@ -14,7 +14,7 @@ class FbPageCrawler
     #raise "Fail to acquire access_token" if res.nil? || res.empty?
     #token = res[/access_token=(.*)/, 1]
     #raise "Fail to acquire a correct access_token" if token.nil? || token.empty?
-    @access_token = "CAAH9Ulnk1cQBAAAhhTuiZAkzKAXguqxNUrHFt9pRPZCTTOZACzZByICGV5EUlhvBJYtYSmCnVPyaiT4KuxQ1GpBBZCu0ZCfZBxJoxsenHADHH6KMocXmMdWgfLjmF2ZCnc5TuIQIf3sWKq1lU56LfrLsl3aGVv95EfmZA1j5SXLivXRtoenYV1LdqMGaXjoaZBew8ZD"
+    @access_token = "CAAH9Ulnk1cQBAK8gCcxjqkb3xdFvTxCZAZBsv2s6TEIC0uOUo88s63UlnNcbhL909muLxJgAZAK6XmHIyMiRMZAaHSrXMRfBYGZCe1dGibfwZCQ4jXumqifCcmqRpVaavLAnlrOcRLsPaFNtLkW3XPIjHZAQnsK0qXPMj0ttIppXmBxJ3XGZCcDqwTkJVjV3OSMZD"
   rescue => ex
     @@logger.error ex.message
     @@logger.debug ex.backtrace.join('\n')

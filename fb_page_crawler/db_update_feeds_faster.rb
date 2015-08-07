@@ -55,8 +55,8 @@ class FbPageCrawler
     puts "\"#{group_name}\" : 進行社團資料庫文章更新...[#{count}篇][耗時#{now_5 - now_4}秒]"
     puts "\"#{group_name}\" : 完成社團文章更新[#{count}篇][耗時#{now_5 - now_1}秒]"
     return now_5 - now_1
-  #rescue => ex
-    #@@logger.error ex.message
-    #@@logger.debug ex.backtrace.join("\n")
+  rescue => ex
+    @@logger.error ex.message
+    @@logger.debug ex.backtrace.join("\n")
   end
 end

@@ -57,12 +57,12 @@ def main
       total_add_old_feeds_time += group_add_old_feeds_time if group_add_old_feeds_time.class == Float
       next if $leave
     } 
-    #need_updated_groups.each{|group|
+  #  need_updated_groups.each{|group|
       #update_groups
-      #group_update_time = myfb.db_update_feeds_faster(group['_id'],group['doc']['name'])
-      #total_update_time += group_update_time if group_update_time.class == Float
-     # next if $leave
-    #}
+   #   group_update_time = myfb.db_update_feeds_faster(group['_id'],group['doc']['name'])
+   #   total_update_time += group_update_time if group_update_time.class == Float
+   #   next if $leave
+  #  }
     #File.open("./timelog.txt", "a") { |output|  
       puts "完成全部社團新文章增加[耗時#{total_add_new_feeds_time}秒]"
       puts "完成全部社團舊文章增加[耗時#{total_add_old_feeds_time}秒]"

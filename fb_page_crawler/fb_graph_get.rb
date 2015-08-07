@@ -9,6 +9,9 @@ class FbPageCrawler
       http.use_ssl = true
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE     
 	  #puts "URI.escape(query)= " <<URI.escape(query)
+   # File.open("./query.txt", "a") { |output| 
+   #    output.puts URI.escape(query)
+   # }
       req = Net::HTTP::Get.new(URI.escape(query)) # FIXME: URI.escape cause a obsolete warning
       res = http.request req
       # Handle the response from facebook graph
