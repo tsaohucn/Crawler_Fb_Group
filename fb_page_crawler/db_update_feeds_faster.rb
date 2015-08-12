@@ -12,9 +12,9 @@ class FbPageCrawler
     #update_interval = now_1 - find_opts[:update_interval]
     find_target = {"group_id"=>group_id}#'last_updated' => {'$lt' => update_interval}}
     coll = @mongo_db[TABLE_FEEDS]
-    old_feeds = coll.find(find_target, find_opts).to_a
+    old_feeds = coll.find(find_target, find_opts).to_a ###error
     now_2 = Time.now#test programin time
-    puts "\"#{group_name}\" : 進行社團舊文章抓取...[文章時間#{old_feeds.first['doc'].fetch('created_time')}至#{old_feeds.last['doc'].fetch('created_time')}][#{old_feeds.size}篇][耗時#{now_2 - now_1}秒]"
+    puts "\"#{group_name}\" : 進行社團舊文章抓取...[文章時間#{old_feeds.first['doc'].fetch('created_time')}至#{old_feeds.last['doc'].fetch('created_time')}][#{old_feeds.size}篇][耗時#{now_2 - now_1}秒]"#error
 ###################grap new posts########################
     new_feeds = Array.new(0)
     since_time = Time.parse(old_feeds.first['doc'].fetch('created_time')) - 1
@@ -32,7 +32,7 @@ class FbPageCrawler
       end
     end
     now_3 = Time.now#test programin time
-    puts "\"#{group_name}\" : 進行社團新文章抓取...[文章時間#{new_feeds.last.fetch('created_time')}至#{new_feeds.first.fetch('created_time')}][#{new_feeds.size}篇][耗時#{now_3 - now_2}秒]"
+    puts "\"#{group_name}\" : 進行社團新文章抓取...[文章時間#{new_feeds.last.fetch('created_time')}至#{new_feeds.first.fetch('created_time')}][#{new_feeds.size}篇][耗時#{now_3 - now_2}秒]"#error
 #######################process data########################
     arr = Array.new(0)
     old_feeds.each do |ele|
@@ -56,7 +56,12 @@ class FbPageCrawler
     puts "\"#{group_name}\" : 完成社團文章更新[#{count}篇][耗時#{now_5 - now_1}秒]"
     return now_5 - now_1
   rescue => ex
-    puts "\"#{group_name}\" : error on \"db_update_feeds_faster\"\n#{ex}"
+    #puts "\"#{group_name}\" : error on \"db_update_feeds_faster\"\n#{ex}"
+    puts ex.backtrace.join("\n")
+   # puts ex.backtrace.map{ |x|   
+    # x.match(/^(.+?):(\d+)(|:in `(.+)')$/); 
+   # [$1,$2,$4] 
+#}
     @@logger.error ex.message
     @@logger.debug ex.backtrace.join("\n")
   end
