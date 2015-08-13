@@ -32,6 +32,7 @@ class FbPageCrawler
     @@logger.debug "fb_get_feeds: group_id=#{group_id} since=#{o[:since].inspect} until=#{o[:until].inspect}"
     #File.open("./link2.txt", "a+") { |file|  file.puts query}
     data = fb_graph_get(query)
+    #File.open("./data.txt", "a+") { |file|  file.puts data}
     #puts data
     raise 'No available data retrieved' if data.nil? || data.empty?
     data = JSON.parse(data)
