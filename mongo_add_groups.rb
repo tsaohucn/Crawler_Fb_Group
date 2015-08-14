@@ -18,11 +18,11 @@ def main
   #myfb.access_token = APP_TOKEN # set access_token if you have a valid one
   #myfb.fb_get_token!
   myfb.fb_get_close_token
-  mongo_db = mongo_link('127.0.0.1',27017,'fb_group','admin','12345')
-  coll = mongo_db['group_list']
-  group_list = JSON.parse(coll.find_one().to_json)
-  group_list.delete("_id")
-  group_list.each do |group_id,group_name|
+  mongo_db = mongo_link('127.0.0.1',27017,'fb_rawdata','admin','12345')
+  coll = mongo_db['groups_list']
+  groups_list = JSON.parse(coll.find_one().to_json)
+  groups_list.delete("_id")
+  groups_list.each do |group_id,group_name|
     group_id = group_id.strip
     #puts "Adding #{group_name} : #{group_id} into page database"
     myfb.db_add_group(group_id,group_name) # Add a group into database
