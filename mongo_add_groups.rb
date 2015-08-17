@@ -13,8 +13,8 @@ def mongo_link(mongo_host,mongo_port,mongo_dbname,mongo_user_name,mongo_user_pwd
 end
 def main
   myfb = FbPageCrawler.new
-  myfb.app_id = APP_ID
-  myfb.app_secret = APP_SECRET
+  #myfb.app_id = APP_ID
+  #myfb.app_secret = APP_SECRET
   #myfb.access_token = APP_TOKEN # set access_token if you have a valid one
   #myfb.fb_get_token!
   myfb.fb_get_close_token
