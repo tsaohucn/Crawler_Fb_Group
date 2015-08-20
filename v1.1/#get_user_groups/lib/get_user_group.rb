@@ -7,9 +7,9 @@ def check_group(browser)
 		group_link = "https://www.facebook.com/#{user_name}/groups"
 	end
 	browser.get group_link
-	sleep(2)
+	sleep(3)
 	group_url = browser.current_url
-	if group_url == person_url
+	if group_url == person_url or browser.find_elements(:xpath, "//div[@class='mbs fwb']/a").size == 0
 		return false
 	else
 		return true
@@ -17,7 +17,7 @@ def check_group(browser)
 end
 def get_user_group(app_scoped_user_id,user_name,browser)
 	browser.get "https://www.facebook.com/#{app_scoped_user_id}"
-	sleep(2)
+	sleep(3)
 	check_404 = true , check_group = false
 	check_404 = false if browser.find_elements(:xpath, "//div/h2[@class='_4-dp']").none?
 	check_group = check_group(browser)
@@ -56,3 +56,26 @@ def get_user_group(app_scoped_user_id,user_name,browser)
 	end
 end
 #sleep Random.new.rand(1..10)
+=begin
+def insert_user_groups(client ,doc,user_group)
+	if user_group == 'no group'
+		result = client[:user_group].find(:user_id => doc['user_id']).update_one('$set' => { :user_group_status => "no group",:latest_update_time => Time.now })
+		if result.n == 1
+			no_group_count += 1
+			puts "\"#{doc['user_id']}\" \"#{doc['user_name']}\"...沒有公開社團(#{no_group_count})"
+		end
+	else
+		result = client[:user_group].find(:user_id => doc['user_id']).update_one('$set' => { :user_group_status => "has group",:user_group => user_group,:latest_update_time => Time.now })
+		if result.n == 1
+			has_group_count += 1
+			puts "\"#{doc['user_id']}\" \"#{doc['user_name']}\"抓到#{user_group.size}個公開社團...has_group(#{has_group_count})"
+		end
+	end
+rescue Exception => ex
+	  		#logger.error ex.message
+    			#logger.debug ex.backtrace.join("\n")
+    			$stderr.puts ex.message
+  			$stderr.puts ex.backtrace.join("\n")
+    			puts "#{doc['user_id']} error..."
+end
+=end
