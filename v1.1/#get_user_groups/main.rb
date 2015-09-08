@@ -13,23 +13,23 @@ def main(browser)
     	##########################
 	no_group_count,has_group_count = 0,0
 	Mongo::Logger.logger.level = ::Logger::FATAL
-	client = Mongo::Client.new([ '192.168.26.180:27017' ],:database =>'fb_group',:user =>'admin',:password =>'12345')
-	doc_set = client[:user_group].find({:user_group_status => "never update"})
+	client = Mongo::Client.new([ '192.168.26.180:27017' ],:database =>'fb_rawdata',:user =>'admin',:password =>'12345')
+	doc_set = client[:users].find({:doc_status => "never update"})
 	puts "Get #{doc_set.count.to_i} users  need to update groups"
 	doc_set.each do |doc|
-		user_group = get_user_group(doc['user_id'],doc['user_name'],browser)
+		user_group = get_user_group(doc['app_scoped_user_id'],doc['name'][0],browser)
 		break if user_group == '404'
 		if user_group == 'no group'
-			result = client[:user_group].find(:user_id => doc['user_id']).update_one('$set' => { :user_group_status => "no group",:latest_update_time => Time.now })
+			result = client[:users].find(:app_scoped_user_id => doc['app_scoped_user_id']).update_one('$set' => { :doc_status => "no group",:latest_update_time => Time.now })
 			if result.n == 1
 				no_group_count += 1
-				puts "\"#{doc['user_id']}\" \"#{doc['user_name']}\"...沒有公開社團(#{no_group_count})"
+				puts "\"#{doc['app_scoped_user_id']}\" \"#{doc['name'][0]}\"...沒有公開社團(#{no_group_count})"
 			end
 		else
-			result = client[:user_group].find(:user_id => doc['user_id']).update_one('$set' => { :user_group_status => "has group",:user_group => user_group,:latest_update_time => Time.now })
+			result = client[:users].find(:app_scoped_user_id => doc['app_scoped_user_id']).update_one('$set' => { :doc_status => "has group",:groups => user_group,:latest_update_time => Time.now })
 			if result.n == 1
 				has_group_count += 1
-				puts "\"#{doc['user_id']}\" \"#{doc['user_name']}\"...抓到#{user_group.size}個公開社團(#{has_group_count})"
+				puts "\"#{doc['app_scoped_user_id']}\" \"#{doc['name'][0]}\"...抓到#{user_group.size}個公開社團(#{has_group_count})"
 			end
 		end
 	end
